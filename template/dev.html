@@ -37,7 +37,7 @@
 </head>
 
 <body>
-    <h1>Hình ảnh dữ liệu EDF thô</h1>
+    <h1>Raw edf data image</h1>
     {% for file in image_names %}
     {% if file.endswith('Fpz_Cz.png') %}
     <div class="img-chart">
@@ -46,8 +46,8 @@
     {% endif %}
     {% endfor %}
     <br>
-    <h1>Kết quả phân loại giấc ngủ</h1>
-    <label for="epoch_file">Chọn hàm kích hoạt:</label>
+    <h1>Results of sleep stage classification</h1>
+    <label for="epoch_file">Select activation function:</label>
     <select name="epoch_file" id="epoch_file">
         <option value="relu">ReLU</option>
         <option value="gelu">GELU</option>

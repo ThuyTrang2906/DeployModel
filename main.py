@@ -67,7 +67,7 @@ def model_evaluate(model, test_dl, device, method):
 
     # In kết quả
     for label, acc in accuracy.items():
-        print("Nhãn ", label, " Tỉ lệ dự đoán đúng = ",acc)
+        print("The correct prediction rate of the label  ", label, " = ",acc)
 
     return total_loss, total_acc, outs, trgs
 

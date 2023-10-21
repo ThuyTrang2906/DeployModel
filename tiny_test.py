@@ -170,7 +170,7 @@ def predict_tiny(
     # In kết quả
     print("=====         TinySleepNet        =====")
     for label, a in accuracy.items():
-        print("Nhãn ", label, " Tỉ lệ dự đoán đúng = ",a)
+        print("The correct prediction rate of the label ", label, " = ",a)
         
     return acc, f1_score, preds
 

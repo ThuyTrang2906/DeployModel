@@ -181,10 +181,10 @@ def evaluate():
 
     if len(data['y']) < 10:
         stage_mapping = {
-            0: "Giai đoạn Thức",
-            1: "Giai đoạn 1",
-            2: "Giai đoạn 2",
-            3: "Giai đoạn 3",
+            0: "Stage Wake",
+            1: "Stage 1",
+            2: "Stage 2",
+            3: "Stage 3",
             4: "REM"
         }
 
@@ -277,7 +277,7 @@ def update_chart():
                     temp[index]='N3'
                 elif temp[index]==4:
                     temp[index]='REM'
-            initial_chart_data["Nhãn đúng"] = temp
+            initial_chart_data["True labels"] = temp
         elif value == "1":
             temp = outs_CA
             for index in range(0,len(temp)):

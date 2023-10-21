@@ -286,7 +286,7 @@
     </div>
 
     <div class="data-raw">
-        <h2>The data label is correct</h2>
+        <h2>True labels</h2>
         <div class="canvas-chart">
             <canvas id="trueLabelsChart" width="1500" height="350"></canvas>
         </div>
@@ -294,13 +294,13 @@
     <div class="model" style="margin-top: 0px;">
         <label for="select-model">Select model</label>
         <form name="select-model" id="select-model">
-            <input type="checkbox" name="model" id="modelTrue" value=0 onchange="updateChart()">The label is correct</input>
-            <input type="checkbox" name="model" id="modelCa-tcc" value=2 onchange="updateChart()">CA-TCC</input>
-            <input type="checkbox" name="model" id="modelTs-tcc" value=4 onchange="updateChart()">TS-TCC</input>
-            <input type="checkbox" name="model" id="modelTiny" value=5 onchange="updateChart()">TinySleepNet</input>
-            <input type="checkbox" name="model" id="modelTS_GE" value=6 onchange="updateChart()">TS-TCC GELU</input>
-            <input type="checkbox" name="model" id="modelCA_GE" value=7 onchange="updateChart()">CA-TCC GELU</input>
-            <input type="checkbox" name="model" id="modelTiny_GE" value=8 onchange="updateChart()">TinySleepNet
+            <input type="checkbox" name="model" id="modelTrue" value=0 onchange="updateChart()">True labels</input>
+            <input type="checkbox" name="model" id="modelCa-tcc" value=1 onchange="updateChart()">CA-TCC</input>
+            <input type="checkbox" name="model" id="modelTs-tcc" value=2 onchange="updateChart()">TS-TCC</input>
+            <input type="checkbox" name="model" id="modelTiny" value=3 onchange="updateChart()">TinySleepNet</input>
+            <input type="checkbox" name="model" id="modelTS_GE" value=4 onchange="updateChart()">TS-TCC GELU</input>
+            <input type="checkbox" name="model" id="modelCA_GE" value=5 onchange="updateChart()">CA-TCC GELU</input>
+            <input type="checkbox" name="model" id="modelTiny_GE" value=6 onchange="updateChart()">TinySleepNet
             GELU</input>
         </form>
         <div class="canvas-chart">
@@ -411,11 +411,11 @@
         const labelColors = {
             'TS-TCC': 'blue',
             'CA-TCC': 'green',
-            'TinySleepNet': 'yellow',
+            'TinySleepNet': 'orange',
             'TS-TCC GELU': 'lime',
             'CA-TCC GELU': 'maroon',
             'TinySleepNet GELU': 'copper',
-            'Nhãn đúng': 'red'
+            'True labels': 'red'
         };
 
         const datasets = Object.entries(data.data).map(([label, values]) => {
@@ -533,7 +533,7 @@
             data: {
                 labels: [""],
                 datasets: Object.entries(data.data).map(([label, values]) => {
-                    if (label != 'Nhãn đúng') {
+                    if (label != 'True labels') {
                         results = {
                             label: label,
                             data: [scores[label]],
