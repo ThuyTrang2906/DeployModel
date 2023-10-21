@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dev</title>
+    <meta charset="UTF-8">
+
+    <style>
+        body {
+            width: 100%;
+            /* display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column; */
+        }
+
+        h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 50spx;
+        }
+
+        /* .img-chart {
+            width: 100%;
+            height: 300px;
+        }
+
+        .compare-chart {
+            width: 100%;
+        } */
+
+        .image {
+            width: 100%;
+            height: 300px;
+            object-fit: fill;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hình ảnh dữ liệu EDF thô</h1>
+    {% for file in image_names %}
+    {% if file.endswith('Fpz_Cz.png') %}
+    <div class="img-chart">
+        <img src="{{ url_for('static', filename=file, _external=True) }}" alt="Results">
+    </div>
+    {% endif %}
+    {% endfor %}
+    <br>
+    <h1>Kết quả phân loại giấc ngủ</h1>
+    <label for="epoch_file">Chọn hàm kích hoạt:</label>
+    <select name="epoch_file" id="epoch_file">
+        <option value="relu">ReLU</option>
+        <option value="gelu">GELU</option>
+    </select>
+    {% for file in image_names %}
+    {% if file.endswith('acc.png') %}
+    <div class="img-chart">
+        <img src="{{ url_for('static', filename=file, _external=True) }}" alt="Results">
+    </div>
+    {% endif %}
+    {% endfor %}
+    <br>
+    {% for file in image_names %}
+    {% if file.endswith('true_line.png') %}
+    <div class="img-chart">
+        <img src="{{ url_for('static', filename=file, _external=True) }}" alt="Results">
+    </div>
+    {% endif %}
+    {% endfor %}
+    <div class="compare-chart">
+        {% for file in image_names %}
+        {% if file.endswith('TS-TCC.png') %}
+        <div class="chart">
+            <img class="image" src="{{ url_for('static', filename=file, _external=True) }}" alt="Results">
+        </div>
+        {% endif %}
+        {% if file.endswith('CA-TCC.png') %}
+        <div class="chart">
+            <img class="image" src="{{ url_for('static', filename=file, _external=True) }}" alt="Results">
+        </div>
+        {% endif %}
+        {% if file.endswith('TinySleepNet.png') %}
+        <div class="chart">
+            <img class="image" src="{{ url_for('static', filename=file, _external=True) }}" alt="Results">
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</body>
+
+</html>

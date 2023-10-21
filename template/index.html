@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sleep Stage Classification</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      /* width: 100%; */
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 40px;
+      margin-top: -50px;
+      margin-bottom: 50px;
+    }
+
+    .home {
+      width: 750px;
+      height: 320px;
+      border-radius: 50px;
+      padding: 0px 100px 20px;
+      border: 2px dashed black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+    }
+
+    form {
+      position: relative;
+    }
+
+    select {
+      padding: 8px 20px;
+      margin: 8px 0px;
+      box-sizing: border-box;
+      font-size: 18px;
+      border-radius: 5px;
+      border: solid 1px gray;
+    }
+
+    option {
+      padding: 8px 10px;
+      margin: 8px 0px;
+      box-sizing: border-box;
+      font-size: 18px;
+    }
+
+    label {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 600;
+      font-size: 20px;
+      color: black;
+      margin: 0;
+      padding: 0;
+      line-height: 50px;
+      margin-right: 20px;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      background-color: rgb(255, 213, 174);
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      border: 2px solid rgb(255, 132, 0);
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px 20px;
+      margin: 20px 0;
+      box-sizing: border-box;
+      background-color: #3baeff;
+      padding-right: 60px;
+      border-radius: 5px;
+      font-size: 20px;
+      cursor: pointer;
+      border: solid 1px #4bb4ff;
+    }
+
+    p {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 600;
+      font-size: 30px;
+      color: black;
+      margin: 0;
+      padding: 0;
+    }
+
+    .icon-upload1 {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      top: 81%;
+      left: 53%;
+      cursor: pointer;
+    }
+
+    .icon-upload2 {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      top: 71%;
+      left: 53%;
+      cursor: pointer;
+    }
+
+    .logo-uit {
+      margin-right: 20px;
+    }
+
+    .logo-uit,
+    .logo-httt {
+      height: 70px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .info-uni {
+      text-align: center;
+    }
+
+    header {
+      width: 100%;
+      height: 80px;
+      background-color: #eff8ff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      /* border-bottom: 2px solid rgb(55, 54, 54); */
+    }
+
+    .header-container {
+      height: 90px;
+      width: 80%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      color: #4415ee;
+    }
+
+    footer {
+      width: 100%;
+      height: 80px;
+      background-color: #eff8ff;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      /* border-top: 2px solid rgb(55, 54, 54); */
+    }
+
+    .footer-container {
+      width: 75%;
+      height: 90px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .info-uni1 {
+      font-size: 18px;
+      color: #3c60a9;
+    }
+
+    .info-name,
+    .info-uni2 {
+      font-size: 18px;
+      color: #3c60a9;
+    }
+
+    .info-uni3 {
+      font-size: 16px;
+      color: #3c60a9;
+    }
+
+    .info-student {
+      display: flex;
+      flex-direction: row;
+      font-size: 17px;
+    }
+
+    i {
+      margin-right: 10px;
+      font-size: 18px;
+      color: #3c60a9;
+    }
+
+    .student-name {
+      display: flex;
+      flex-direction: column;
+      color: #3c60a9;
+      margin-top: -3px;
+    }
+
+    .info-ths {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 23px;
+      align-items: start;
+      color: #3c60a9;
+    }
+
+    .info-ths-name {
+      font-size: 17px;
+      margin-top: -3px;
+      color: #3c60a9;
+    }
+
+    .time {
+      margin-top: 10px;
+      line-height: 24px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-container">
+      <div>
+        <img class="logo-uit" src="/static/logo/uit.png" alt="">
+        <img class="logo-httt" src="/static/logo/Logo-Khoa-HTTT.png" alt="">
+      </div>
+      <div class="info-uni">
+        <p class="info-uni3">TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN - ĐHQG-HCM</p>
+        <p class="info-uni2"><b>KHOA HỆ THỐNG THÔNG TIN</b></p>
+      </div>
+    </div>
+  </header>
+  <h1>CÔNG CỤ PHÂN LỚP GIAI ĐOẠN GIẤC NGỦ</h1>
+  <div class="home">
+    <div id="label-selection" style="width: 200px;">
+      <input type="radio" id="with-labels" name="label-option" value="with-labels" checked>
+      <label for="with-labels">Phân tích</label>
+      <br>
+      <input type="radio" id="without-labels" name="label-option" value="without-labels">
+      <label for="without-labels">Dự đoán</label>
+    </div>
+
+    <form id="with-labels-form" action="/evaluate" method="POST" enctype="multipart/form-data">
+      <br>
+      <label for="edf_file1">Chọn tệp edf:</label>
+      <input class="input_edf" type="file" id="edf_file1" name="file">
+      <br>
+      <label for="edf_file2">Chọn tệp hypnogram:</label>
+      <input class="input_hyn" type="file" id="edf_file2" name="file">
+      <input type="submit" value="Tải lên">
+      <img class="icon-upload1" src="/static/logo/upload.png" alt="">
+    </form>
+
+    <form id="without-labels-form" action="/predict" method="POST" enctype="multipart/form-data" style="display: none;">
+      <br>
+      <label for="edf_file1">Chọn tệp edf:</label>
+      <input class="input_edf" type="file" id="edf_file1" name="file">
+      <br>
+      <input type="submit" value="Tải lên">
+      <img class="icon-upload2" src="/static/logo/upload.png" alt="" />
+    </form>
+  </div>
+
+  <footer>
+    <div class="footer-container">
+      <div class="info-student">
+        <i>Đề tài Khóa luận tốt nghiệp:</i>
+        <div class="student-name">
+          <p class="info-name">PHÂN LỚP GIAI ĐOẠN GIẤC NGỦ
+            <br>DỰA TRÊN PHƯƠNG PHÁP HỌC SÂU
+          </p>
+        </div>
+      </div>
+      <div class="info-student">
+        <i>Sinh viên thực hiện:</i>
+        <div class="student-name">
+          <p class="info-name">Tần Thùy Trang - 19532384</p>
+          <p class="info-name">Nguyễn Thị Hồng - 19521550</p>
+        </div>
+      </div>
+      <!-- <div class="info-ths">
+        <i>GVHD:</i>
+        <p class="info-ths-name">ThS. Dương Phi Long</p>
+        <i class="time">Thời gian thực hiện: 01 - 07/2023</i>
+      </div> -->
+      <div class="info-student">
+        <div>
+
+          <i>Giảng viên hướng dẫn:</i>
+          <br>
+          <i class="time">Thời gian thực hiện:</i>
+        </div>
+        <div class="student-name">
+          <p class="info-name">ThS. Dương Phi Long</p>
+          <p class="info-name">01 - 07/2023</p>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+</body>
+
+</html>
+<script>
+  const withLabelsRadio = document.getElementById('with-labels');
+  const withoutLabelsRadio = document.getElementById('without-labels');
+  const withLabelsForm = document.getElementById('with-labels-form');
+  const withoutLabelsForm = document.getElementById('without-labels-form');
+
+  const savedOption = localStorage.getItem('selectedOption');
+  if (savedOption === 'with-labels') {
+    document.getElementById('with-labels').checked = true;
+  } else if (savedOption === 'without-labels') {
+    document.getElementById('without-labels').checked = true;
+    withLabelsForm.style.display = 'none';
+    document.getElementById('without-labels-form').style.display = 'block';
+  }
+
+
+  withLabelsRadio.addEventListener('change', () => {
+    withLabelsForm.style.display = 'block';
+    withoutLabelsForm.style.display = 'none';
+    localStorage.setItem('selectedOption', 'with-labels');
+
+  });
+
+  withoutLabelsRadio.addEventListener('change', () => {
+    withLabelsForm.style.display = 'none';
+    withoutLabelsForm.style.display = 'block';
+    localStorage.setItem('selectedOption', 'without-labels');
+
+  });
+
+</script>

@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"
+        integrity="sha512-UXumZrZNiOwnTcZSHLOfcTs0aos2MzBWHXOHOuB0J/R44QB0dwY5JgfbvljXcklVf65Gc4El6RjZ+lnwd2az2g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/2.0.1/chartjs-plugin-zoom.min.js"
+        integrity="sha512-wUYbRPLV5zs6IqvWd88HIqZU/b8TBx+I8LEioQ/UC0t5EMCLApqhIAnUg7EsAzdbhhdgW07TqYDdH3QEXRcPOQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .data-raw {
+            width: 94%;
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .activation {
+            width: 94%;
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .image-activation {
+            width: 78%;
+            object-fit: contain;
+            margin-top: 20px;
+            /* margin-bottom: 30px; */
+        }
+
+        .data-and-activation {
+            width: 96%;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+
+        input [type="checkbox"] {
+            padding: 8px 10px;
+            margin: 8px 0px;
+            box-sizing: border-box;
+            font-size: 18px;
+        }
+
+        label {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            font-size: 24px;
+            color: black;
+            margin: 0;
+            padding: 0;
+            line-height: 50px;
+            margin-right: 20px;
+        }
+
+        p {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            font-size: 30px;
+            color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        .model {
+            width: 94%;
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+            padding-top: 30px;
+        }
+
+        .model-bar {
+            width: 94%;
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+            padding-top: 30px;
+            margin-bottom: 100px;
+        }
+
+        .image-model {
+            width: 98%;
+            object-fit: contain;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .canvas-chart {
+            text-align: center;
+            width: 100%;
+            height: 50vh;
+            object-fit: fill;
+        }
+
+        .label-predict {
+            width: 100%;
+            text-align: left;
+            font-size: 20px;
+            padding-left: 294px;
+        }
+
+        .chart-raw-box {
+            width: 1300px;
+            max-width: 1300px;
+        }
+
+        .logo-uit {
+            margin-right: 20px;
+        }
+
+        .logo-uit,
+        .logo-httt {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .info-uni {
+            text-align: center;
+        }
+
+        header {
+            width: 100%;
+            height: 80px;
+            background-color: #eff8ff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            /* border-bottom: 2px solid rgb(55, 54, 54); */
+        }
+
+        .header-container {
+            height: 90px;
+            width: 80%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            color: #4415ee;
+        }
+
+        footer {
+            width: 100%;
+            height: 80px;
+            background-color: #eff8ff;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* border-top: 2px solid rgb(55, 54, 54); */
+        }
+
+        .footer-container {
+            width: 75%;
+            height: 90px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .info-uni1 {
+            font-size: 18px;
+            color: #3c60a9;
+        }
+
+        .info-name,
+        .info-uni2 {
+            font-size: 18px;
+            color: #3c60a9;
+            margin: 0;
+        }
+
+        .info-uni3 {
+            font-size: 16px;
+            color: #3c60a9;
+        }
+
+        .info-student {
+            display: flex;
+            flex-direction: row;
+            font-size: 17px;
+        }
+
+        i {
+            margin-right: 10px;
+            font-size: 18px;
+            color: #3c60a9;
+            margin-top: -4px;
+        }
+
+        .student-name {
+            display: flex;
+            flex-direction: column;
+            color: #3c60a9;
+            margin-top: -3px;
+        }
+
+        .teacher-name {
+            display: flex;
+            flex-direction: column;
+            color: #3c60a9;
+            margin-top: -3px;
+        }
+
+        .title-name {
+            margin-top: -3px;
+        }
+
+        .info-ths {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 23px;
+            align-items: start;
+            color: #3c60a9;
+        }
+
+        .info-ths-name {
+            font-size: 17px;
+            margin-top: -3px;
+            color: #3c60a9;
+        }
+
+        .time {
+            margin-top: 10px;
+            line-height: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div>
+                <img class="logo-uit" src="/static/logo/uit.png" alt="">
+                <img class="logo-httt" src="/static/logo/Logo-Khoa-HTTT.png" alt="">
+            </div>
+            <div class="info-uni">
+                <p class="info-uni3">TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN - ĐHQG-HCM</p>
+                <p class="info-uni2"><b>KHOA HỆ THỐNG THÔNG TIN</b></p>
+            </div>
+        </div>
+    </header>
+    <h1>Kết quả phân lớp giai đoạn giấc ngủ</h1>
+    <div class="data-raw">
+        <h2>Hình ảnh dữ liệu edf thô</h2>
+        <div class="canvas-chart">
+            <canvas id="rawChart" width="1700" height="450"></canvas>
+        </div>
+    </div>
+    </div>
+
+    <div class="data-raw">
+        <h2>Nhãn dữ liệu đúng</h2>
+        <div class="canvas-chart">
+            <canvas id="trueLabelsChart" width="1500" height="350"></canvas>
+        </div>
+    </div>
+    <div class="model" style="margin-top: 0px;">
+        <label for="select-model">Chọn mô hình</label>
+        <form name="select-model" id="select-model">
+            <input type="checkbox" name="model" id="modelTrue" value=0 onchange="updateChart()">Nhãn đúng</input>
+            <input type="checkbox" name="model" id="modelCa-tcc" value=2 onchange="updateChart()">CA-TCC</input>
+            <input type="checkbox" name="model" id="modelTs-tcc" value=4 onchange="updateChart()">TS-TCC</input>
+            <input type="checkbox" name="model" id="modelTiny" value=5 onchange="updateChart()">TinySleepNet</input>
+            <input type="checkbox" name="model" id="modelTS_GE" value=6 onchange="updateChart()">TS-TCC GELU</input>
+            <input type="checkbox" name="model" id="modelCA_GE" value=7 onchange="updateChart()">CA-TCC GELU</input>
+            <input type="checkbox" name="model" id="modelTiny_GE" value=8 onchange="updateChart()">TinySleepNet
+            GELU</input>
+        </form>
+        <div class="canvas-chart">
+            <canvas id="myChartLine"></canvas>
+        </div>
+    </div>
+    <div class="model-bar" style="margin-top: 20px;">
+        <label>Biểu đồ kết quả accuracy từng phương pháp</label>
+        <div class="canvas-chart">
+            <canvas id="myChartBar"></canvas>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-container">
+            <div class="info-student">
+                <i>Đề tài Khóa luận tốt nghiệp:</i>
+                <div class="student-name">
+                    <p class="info-name">PHÂN LỚP GIAI ĐOẠN GIẤC NGỦ
+                        <br>DỰA TRÊN PHƯƠNG PHÁP HỌC SÂU
+                    </p>
+                </div>
+            </div>
+            <div class="info-student">
+                <i>Sinh viên thực hiện:</i>
+                <div class="student-name">
+                    <p class="info-name">Tần Thùy Trang - 19532384</p>
+                    <p class="info-name">Nguyễn Thị Hồng - 19521550</p>
+                </div>
+            </div>
+            <!-- <div class="info-ths">
+            <i>GVHD:</i>
+            <p class="info-ths-name">ThS. Dương Phi Long</p>
+            <i class="time">Thời gian thực hiện: 01 - 07/2023</i>
+          </div> -->
+            <div class="info-student">
+                <div class="title-name">
+
+                    <i>Giảng viên hướng dẫn:</i>
+                    <br>
+                    <i class="time">Thời gian thực hiện:</i>
+                </div>
+                <div class="teacher-name">
+                    <p class="info-name">ThS. Dương Phi Long</p>
+                    <p class="info-name">01 - 07/2023</p>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+</body>
+
+</html>
+
+<script>
+
+    var predicts = JSON.parse('{{ predicts_json|safe }}');
+    console.log(predicts);
+    var scores = JSON.parse('{{ scores_json|safe }}');
+    console.log('scores ', scores);
+    myChartLine = null
+    myChartBar = null
+    myChart = null
+
+    function updateChart() {
+        var selectedValues = [];
+        var sendData = {
+            selectedValues: selectedValues,
+            predicts: predicts
+        };
+        var checkboxes = document.getElementsByName("model");
+        var alertMessage = "";
+        // Lặp qua các checkbox và lấy giá trị của các checkbox đã được chọn
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                var value = checkboxes[i].value;
+                selectedValues.push(value);
+                alertMessage += value + "\n";
+            }
+        }
+        // Gửi danh sách giá trị đã chọn đến máy chủ Flask để tạo biểu đồ
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onload = () => {
+            // print JSON response
+            if (xhttp.status >= 200 && xhttp.status < 300) {
+                // parse JSON
+                const response = JSON.parse(xhttp.responseText)
+                console.log("response ", response)
+                drawChart(response)
+            }
+        }
+
+        xhttp.open("POST", "/update-chart", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify(sendData));
+    }
+
+    function drawChart(data) {
+        var ctx = document.getElementById('myChartLine').getContext('2d');
+        var chartBar = document.getElementById('myChartBar').getContext('2d');
+        ctx.canvas.width = 1500;
+        ctx.canvas.height = 400;
+        chartBar.canvas.width = 1200;
+        chartBar.canvas.height = 300;
+
+        if (!data || Object.keys(data).length === 0) {
+            console.error('Invalid data');
+            return;
+        }
+
+        if (myChartLine) {
+            myChartLine.destroy();
+        }
+
+        if (myChartBar) {
+            myChartBar.destroy();
+        }
+
+
+        const labelColors = {
+            'TS-TCC': 'blue',
+            'CA-TCC': 'green',
+            'TinySleepNet': 'yellow',
+            'TS-TCC GELU': 'lime',
+            'CA-TCC GELU': 'maroon',
+            'TinySleepNet GELU': 'copper',
+            'Nhãn đúng': 'red'
+        };
+
+        const datasets = Object.entries(data.data).map(([label, values]) => {
+            const dataCounts = values.map((value, index) => {
+                switch (value) {
+                    case 'W':
+                        return 0;
+                    case 'N1':
+                        return 1;
+                    case 'N2':
+                        return 2;
+                    case 'N3':
+                        return 3;
+                    case 'REM':
+                        return 4;
+                    default:
+                        return 5;
+                }
+
+            });
+            return {
+                label: label,
+                data: dataCounts,
+                borderColor: labelColors[label],
+                fill: false
+            };
+        });
+
+        const labels_x = Array.from(Array(datasets[0].data.length), (_, i) => (i + 1).toString());
+        datasets.sort((a, b) => {
+            const sumA = a.data.reduce((sum, value) => sum + value, 0);
+            const sumB = b.data.reduce((sum, value) => sum + value, 0);
+            return sumB - sumA;
+        });
+
+        myChartLine = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels_x,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            fontSize: 30, // Kích thước chữ cho trục Ox
+                        },
+                    },
+                    y: {
+                        min: 0,  // Giá trị tối thiểu của trục Oy
+                        max: 4.25,  // Giá trị tối đa của trục Oy
+                        ticks: {
+                            stepSize: 1,
+                            callback: function (value, index, values) {
+                                switch (value) {
+                                    case 0:
+                                        return 'W';
+                                    case 1:
+                                        return 'N1';
+                                    case 2:
+                                        return 'N2';
+                                    case 3:
+                                        return 'N3';
+                                    case 4:
+                                        return 'REM';
+                                    default:
+                                        return '';
+                                }
+                            },
+                            fontSize: 30,
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            // This more specific font property overrides the global property
+                            font: {
+                                size: 20
+                            }
+                        }
+                    },
+                    zoom: {
+                        zoom: {
+                            wheel: {
+                                enabled: true
+                            },
+                            pinch: {
+                                enabled: true
+                            },
+                            mode: 'xy',
+                            scaleMode: 'xy',
+                        },
+                        pan: {
+                            enabled: true,
+                            mode: 'xy',
+                            scaleMode: 'xy',
+                        },
+                        limits: {
+                            x: { min: 'original', max: 'original' }, // Giới hạn zoom trục x
+                            y: { min: 'original', max: 'original' }, // Giới hạn zoom trục y
+                        },
+                    },
+                },
+            },
+
+        });
+
+        let results = {}
+        // Thêm plugin ChartDataLabels vào biểu đồ
+        myChartBar = new Chart(chartBar, {
+            type: 'bar',
+            data: {
+                labels: [""],
+                datasets: Object.entries(data.data).map(([label, values]) => {
+                    if (label != 'Nhãn đúng') {
+                        results = {
+                            label: label,
+                            data: [scores[label]],
+                            backgroundColor: labelColors[label],
+                            borderColor: labelColors[label],
+                            borderWidth: 1,
+                            datalabels: {
+                                color: 'black',
+                                anchor: 'end',
+                                align: 'top',
+                                offset: 5,
+                                formatter: function (value) {
+                                    return value + '%';
+                                }
+                            }
+                        };
+                    }
+                    return results;
+                }),
+            },
+            plugins: [ChartDataLabels],
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            fontSize: 30, // Kích thước chữ cho trục Ox
+                        },
+                    },
+                    y: {
+                        min: 0,  // Giá trị tối thiểu của trục Oy
+                        max: 110,  // Giá trị tối đa của trục Oy
+                        ticks: {
+                            fontSize: 30,
+                            callback: function (value) {
+                                if (value === 110) {
+                                    return ''; // Trả về chuỗi rỗng nếu giá trị là 110
+                                } else {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                },
+            },
+        });
+
+    }
+    document.addEventListener("DOMContentLoaded", function (event) {
+        // Hàm gửi yêu cầu AJAX để cập nhật dữ liệu biểu đồ
+        function updateChart(selectedValues) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var chartData = JSON.parse(this.responseText);
+                    console.log("chardata", chartData)
+                    drawChart(chartData);
+                }
+            };
+
+            // Tạo một chuỗi JSON từ các giá trị được chọn
+            var requestData = JSON.stringify(selectedValues);
+            var sendData = {
+                selectedValues: selectedValues,
+                predicts: predicts
+            };
+            xhttp.open("POST", "/update-chart", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send(JSON.stringify(sendData));
+
+        }
+
+        // Lắng nghe sự kiện onchange cho các phần tử HTML
+        var checkboxes = document.querySelectorAll("input[type='checkbox']");
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener("change", function () {
+                // Lấy danh sách các giá trị được chọn
+                var selectedValues = [];
+                checkboxes.forEach(function (checkbox) {
+                    if (checkbox.checked) {
+                        selectedValues.push(checkbox.value);
+                    }
+                });
+                // Cập nhật dữ liệu biểu đồ
+                updateChart(selectedValues);
+            });
+        });
+        updateChart([]);
+    });
+
+    ///////  BIỂU ĐỒ DỮ LIỆU THÔ
+
+    var inforRaw_x = predicts['inforRaw_x']
+    var inforRaw_y = predicts['inforRaw_y']
+    console.log("inforRaw_y ", inforRaw_y)
+
+    var ctx = document.getElementById('rawChart').getContext('2d');
+    var data = {
+        labels: inforRaw_x,
+        datasets: [{
+            label: 'Amplitude',
+            data: inforRaw_y,
+            borderColor: 'green',
+            borderWidth: 2,
+            tension: 0.1,
+            pointStyle: false,
+            fill: false
+        }]
+    };
+
+    var options = {
+        responsive: true,
+        interaction: {
+            mode: 'index',
+            intersect: false
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    // This more specific font property overrides the global property
+                    font: {
+                        size: 20
+                    }
+                }
+            },
+            zoom: {
+                zoom: {
+                    wheel: {
+                        enabled: true
+                    },
+                    pinch: {
+                        enabled: true
+                    },
+                    mode: 'xy',
+                    scaleMode: 'xy',
+                },
+                pan: {
+                    enabled: true,
+                    mode: 'xy',
+                    scaleMode: 'xy',
+                },
+                limits: {
+                    x: { min: 'original', max: 'original' }, // Giới hạn zoom trục x
+                    y: { min: 'original', max: 'original' }, // Giới hạn zoom trục y
+                },
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        var value = context.parsed.y;
+                        var scaledValue = value * 1e6;  // Quy đổi giá trị của trục y nhân lên 10^-6
+                        return scaledValue.toFixed(0);  // Định dạng giá trị hiển thị khi click chuột theo yêu cầu
+                    }
+                }
+            },
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Time (s)'
+                },
+                ticks: {
+                    beginAtZero: true,
+                    stepSize: 10
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Amplitude (µV)'
+                },
+                ticks: {
+                    callback: function (value, index, values) {
+                        var scaledValue = value * 1e6;  // Quy đổi giá trị của trục y nhân lên 10^-6
+                        return scaledValue.toFixed(0);  // Định dạng giá trị y theo yêu cầu
+                    }
+                }
+            }
+        },
+    };
+
+    var rawChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options
+    });
+
+    ////// BIỂU ĐỒ TRUE LABELS
+    const trueLabels = document.getElementById('trueLabelsChart').getContext('2d');
+
+    const true_labels = predicts['true_labels']
+    console.log(" true_labels ", true_labels)
+    const trueLabels_x = Array.from(Array(true_labels.length), (_, i) => (i + 1).toString());
+
+
+    const trueLabelsChart = new Chart(trueLabels, {
+        type: 'line',
+        data: {
+            labels: trueLabels_x,
+            datasets: [{
+                label: 'true labels',
+                data: true_labels,
+                borderColor: 'red',
+                pointStyle: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        fontSize: 30, // Kích thước chữ cho trục Ox
+                    },
+                },
+                y: {
+                    min: 0,  // Giá trị tối thiểu của trục Oy
+                    max: 4.25,  // Giá trị tối đa của trục Oy
+                    ticks: {
+                        stepSize: 1,
+                        callback: function (value, index, values) {
+                            switch (value) {
+                                case 0:
+                                    return 'W';
+                                case 1:
+                                    return 'N1';
+                                case 2:
+                                    return 'N2';
+                                case 3:
+                                    return 'N3';
+                                case 4:
+                                    return 'REM';
+                                default:
+                                    return '';
+                            }
+                        },
+                        fontSize: 30,
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        // This more specific font property overrides the global property
+                        font: {
+                            size: 20
+                        }
+                    }
+                },
+                zoom: {
+                    zoom: {
+                        wheel: {
+                            enabled: true
+                        },
+                        pinch: {
+                            enabled: true
+                        },
+                        mode: 'xy',
+                        scaleMode: 'xy',
+                    },
+                    pan: {
+                        enabled: true,
+                        mode: 'xy',
+                        scaleMode: 'xy',
+                    },
+                    limits: {
+                        x: { min: 0, max: 'original' }, // Giới hạn zoom trục x
+                        y: { min: 0, max: 'original' }, // Giới hạn zoom trục y
+                    },
+                },
+            },
+        },
+
+    });
+
+</script>

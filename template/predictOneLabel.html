@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Kết Quả</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"
+        integrity="sha512-UXumZrZNiOwnTcZSHLOfcTs0aos2MzBWHXOHOuB0J/R44QB0dwY5JgfbvljXcklVf65Gc4El6RjZ+lnwd2az2g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/2.0.1/chartjs-plugin-zoom.min.js"
+        integrity="sha512-wUYbRPLV5zs6IqvWd88HIqZU/b8TBx+I8LEioQ/UC0t5EMCLApqhIAnUg7EsAzdbhhdgW07TqYDdH3QEXRcPOQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            position: relative;
+        }
+
+        .data-raw {
+            width: 94%;
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .activation {
+            width: 94%;
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .image-activation {
+            width: 78%;
+            object-fit: contain;
+            margin-top: 20px;
+            /* margin-bottom: 30px; */
+        }
+
+        .data-and-activation {
+            width: 96%;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+
+        input [type="checkbox"] {
+            padding: 8px 10px;
+            margin: 8px 0px;
+            box-sizing: border-box;
+            font-size: 18px;
+        }
+
+        label {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            font-size: 24px;
+            color: black;
+            margin: 0;
+            padding: 0;
+            line-height: 50px;
+            margin-right: 20px;
+        }
+
+        .result-label {
+            background-color: white;
+            width: 50%;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 120px;
+        }
+
+        .label-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .label {
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            font-size: 20px;
+        }
+
+        .true-label {
+            background-color: #c0f0c0;
+            margin-bottom: 20px;
+        }
+
+        .predicted-label {
+            background-color: #f0c0c0;
+        }
+
+        p {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            font-size: 30px;
+            color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        .model {
+            width: 94%;
+            text-align: center;
+            /* margin-top: 20px; */
+            background-color: white;
+            border-radius: 10px;
+            padding-top: 30px;
+        }
+
+        .image-model {
+            width: 98%;
+            object-fit: contain;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .canvas-chart {
+            text-align: center;
+            width: 100%;
+            height: 50vh;
+            object-fit: fill;
+            margin-bottom: 120px;
+        }
+
+        .label-predict {
+            width: 100%;
+            text-align: left;
+            font-size: 20px;
+            padding-left: 294px;
+        }
+
+        .chart-raw-box {
+            width: 1300px;
+            max-width: 1300px;
+        }
+
+        .logo-uit {
+            margin-right: 20px;
+        }
+
+        .logo-uit,
+        .logo-httt {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .info-uni {
+            text-align: center;
+        }
+
+        header {
+            width: 100%;
+            height: 80px;
+            background-color: #eff8ff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            /* border-bottom: 2px solid rgb(55, 54, 54); */
+        }
+
+        .header-container {
+            height: 90px;
+            width: 80%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            color: #4415ee;
+        }
+
+        footer {
+            width: 100%;
+            height: 80px;
+            background-color: #eff8ff;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* border-top: 2px solid rgb(55, 54, 54); */
+        }
+
+        .footer-container {
+            width: 75%;
+            height: 90px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .info-uni1 {
+            font-size: 18px;
+            color: #3c60a9;
+        }
+
+        .info-name,
+        .info-uni2 {
+            font-size: 18px;
+            color: #3c60a9;
+            margin: 0;
+        }
+
+        .info-uni3 {
+            font-size: 16px;
+            color: #3c60a9;
+        }
+
+        .info-student {
+            display: flex;
+            flex-direction: row;
+            font-size: 17px;
+        }
+
+        i {
+            margin-right: 10px;
+            font-size: 18px;
+            color: #3c60a9;
+            margin-top: -4px;
+        }
+
+        .student-name {
+            display: flex;
+            flex-direction: column;
+            color: #3c60a9;
+            margin-top: -3px;
+        }
+
+        .teacher-name {
+            display: flex;
+            flex-direction: column;
+            color: #3c60a9;
+            /* margin-top: 3px; */
+        }
+
+        .title-name {
+            margin-top: -3px;
+        }
+
+        .info-ths {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 23px;
+            align-items: start;
+            color: #3c60a9;
+        }
+
+        .info-ths-name {
+            font-size: 17px;
+            margin-top: -3px;
+            color: #3c60a9;
+        }
+
+        .time {
+            margin-top: 10px;
+            line-height: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div>
+                <img class="logo-uit" src="/static/logo/uit.png" alt="">
+                <img class="logo-httt" src="/static/logo/Logo-Khoa-HTTT.png" alt="">
+            </div>
+            <div class="info-uni">
+                <p class="info-uni3">TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN - ĐHQG-HCM</p>
+                <p class="info-uni2"><b>KHOA HỆ THỐNG THÔNG TIN</b></p>
+            </div>
+        </div>
+    </header>
+    <h1>Kết quả phân lớp giai đoạn giấc ngủ</h1>
+    <div class="data-raw">
+        <h1>Hình ảnh dữ liệu EDF thô</h1>
+        <div class="img-chart"></div>
+        <canvas id="rawChart" class="img-data-raw" width="1700" height="450"></canvas>
+        <div class="img-chart"></div>
+    </div>
+    <br>
+    <h1>Kết quả phân lớp giai đoạn giấc ngủ</h1>
+    <div class="result-label">
+        {% if results.true_label %}
+        <div class="label-container">
+            <div class="label true-label">Giai đoạn phân lớp bởi chuyên gia (nhãn đúng): {{ results.true_label }}</div>
+        </div>
+        {% endif %}
+        <h3>Kết quả dự đoán</h3>
+        <div class="label-container">
+            <div class="label-column">
+                {% for method, outs in results.items() %}
+                {% elif method == "outs_tiny_ReLU" and method != "true_label": %}
+                <div class="label predicted-label">TinySleepNet : {{ outs }}</div>
+                {% elif method == "TS-TCC" and method != "true_label": %}
+                <div class="label predicted-label">TS-TCC: {{ outs }}</div>
+                {% elif method == "CA-TCC" and method != "true_label": %}
+                <div class="label predicted-label">CA-TCC: {{ outs }}</div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div class="label-column">
+                {% for method, outs in results.items() %}
+                {% if method == "outs_tiny_GELU" and method != "true_label": %}
+                <div class="label predicted-label">TinySleepNet (GELU): {{ outs }}</div>
+                {% elif method == "TS-TCC_gelu" and method != "true_label": %}
+                <div class="label predicted-label">TS-TCC (GELU): {{ outs }}</div>
+                {% elif method == "CA-TCC_gelu" and method != "true_label": %}
+                <div class="label predicted-label">CA-TCC (GELU): {{ outs }}</div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="info-student">
+                <i>Đề tài Khóa luận tốt nghiệp:</i>
+                <div class="student-name">
+                    <p class="info-name">PHÂN LỚP GIAI ĐOẠN GIẤC NGỦ
+                        <br>DỰA TRÊN PHƯƠNG PHÁP HỌC SÂU
+                    </p>
+                </div>
+            </div>
+            <div class="info-student">
+                <i>Sinh viên thực hiện:</i>
+                <div class="student-name">
+                    <p class="info-name">Tần Thùy Trang - 19532384</p>
+                    <p class="info-name">Nguyễn Thị Hồng - 19521550</p>
+                </div>
+            </div>
+            <!-- <div class="info-ths">
+            <i>GVHD:</i>
+            <p class="info-ths-name">ThS. Dương Phi Long</p>
+            <i class="time">Thời gian thực hiện: 01 - 07/2023</i>
+          </div> -->
+            <div class="info-student">
+                <div>
+
+                    <i>Giảng viên hướng dẫn:</i>
+                    <br>
+                    <i class="time">Thời gian thực hiện:</i>
+                </div>
+                <div class="teacher-name">
+                    <p class="info-name">ThS. Dương Phi Long</p>
+                    <p class="info-name">01 - 07/2023</p>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+</body>
+
+</html>
+<script>
+    var predicts = JSON.parse('{{ predicts_json|safe }}');
+    console.log(predicts);
+    //// Vẽ biểu đồ zoom dữ liệu thô
+    var inforRaw_x = predicts['inforRaw_x']
+    var inforRaw_y = predicts['inforRaw_y']
+
+    var ctx = document.getElementById('rawChart').getContext('2d');
+
+    var data = {
+        labels: inforRaw_x,
+        datasets: [{
+            label: 'Amplitude',
+            data: inforRaw_y,
+            borderColor: 'green',
+            borderWidth: 2,
+            pointStyle: false,
+            tension: 0.1,
+            fill: false
+        }]
+    };
+
+    var options = {
+        responsive: true,
+        interaction: {
+            mode: 'index',
+            intersect: false
+        },
+        plugins: {
+            zoom: {
+                zoom: {
+                    wheel: {
+                        enabled: true
+                    },
+                    pinch: {
+                        enabled: true
+                    },
+                    mode: 'xy',
+                    scaleMode: 'xy',
+                },
+                pan: {
+                    enabled: true,
+                    mode: 'xy',
+                    scaleMode: 'xy',
+                },
+                limits: {
+                    x: { min: 'original', max: 'original' }, // Giới hạn zoom trục x
+                    y: { min: 'original', max: 'original' }, // Giới hạn zoom trục y
+                },
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        var value = context.parsed.y;
+                        var scaledValue = value * 1e6;  // Quy đổi giá trị của trục y nhân lên 10^-6
+                        return scaledValue.toFixed(0);  // Định dạng giá trị hiển thị khi click chuột theo yêu cầu
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Time (s)'
+                },
+                ticks: {
+                    beginAtZero: true
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Amplitude (µV)'
+                },
+                ticks: {
+                    callback: function (value, index, values) {
+                        var scaledValue = value * 1e6;  // Quy đổi giá trị của trục y nhân lên 10^-6
+                        return scaledValue.toFixed(0);  // Định dạng giá trị y theo yêu cầu
+                    }
+                }
+            }
+        },
+    };
+
+    // Vẽ biểu đồ
+    var rawChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options
+    });
+</script>
