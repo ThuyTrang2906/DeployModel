@@ -293,27 +293,27 @@
                 <img class="logo-httt" src="/static/logo/Logo-Khoa-HTTT.png" alt="">
             </div>
             <div class="info-uni">
-                <p class="info-uni3">TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN - ĐHQG-HCM</p>
-                <p class="info-uni2"><b>KHOA HỆ THỐNG THÔNG TIN</b></p>
+                <p class="info-uni3">UNIVERSITY OF INFORMATION TECHNOLOGY - VIETNAM NATIONAL UNIVERSITY</p>
+                <p class="info-uni2"><b>FACULTY OF INFORMATION SYSTEMS</b></p>
             </div>
         </div>
     </header>
-    <h1>Kết quả phân lớp giai đoạn giấc ngủ</h1>
+    <h1>Results of sleep stage classification</h1>
     <div class="data-raw">
-        <h1>Hình ảnh dữ liệu EDF thô</h1>
+        <h1>Raw EDF data image</h1>
         <div class="img-chart"></div>
         <canvas id="rawChart" class="img-data-raw" width="1700" height="450"></canvas>
         <div class="img-chart"></div>
     </div>
     <br>
-    <h1>Kết quả phân lớp giai đoạn giấc ngủ</h1>
+    <h1>Results of sleep stage classification</h1>
     <div class="result-label">
         {% if results.true_label %}
         <div class="label-container">
-            <div class="label true-label">Giai đoạn phân lớp bởi chuyên gia (nhãn đúng): {{ results.true_label }}</div>
+            <div class="label true-label">Classification stage by expert (correct label): {{ results.true_label }}</div>
         </div>
         {% endif %}
-        <h3>Kết quả dự đoán</h3>
+        <h3>Predicted results</h3>
         <div class="label-container">
             <div class="label-column">
                 {% for method, outs in results.items() %}
@@ -340,44 +340,31 @@
         </div>
 
     </div>
-
     <footer>
         <div class="footer-container">
-            <div class="info-student">
-                <i>Đề tài Khóa luận tốt nghiệp:</i>
-                <div class="student-name">
-                    <p class="info-name">PHÂN LỚP GIAI ĐOẠN GIẤC NGỦ
-                        <br>DỰA TRÊN PHƯƠNG PHÁP HỌC SÂU
-                    </p>
-                </div>
+          <div class="info-student">
+            <i>Theme:</i>
+            <div class="student-name">
+              <p class="info-name">SLEEP STAGE CLASSIFICATION
+                <br>BASED ON DEEP LEARNING
+              </p>
             </div>
-            <div class="info-student">
-                <i>Sinh viên thực hiện:</i>
-                <div class="student-name">
-                    <p class="info-name">Tần Thùy Trang - 19532384</p>
-                    <p class="info-name">Nguyễn Thị Hồng - 19521550</p>
-                </div>
+          </div>
+          <div class="info-student">
+            <i>Students implement:</i>
+            <div class="student-name">
+              <p class="info-name">Tần Thùy Trang - 19532384</p>
+              <p class="info-name">Nguyễn Thị Hồng - 19521550</p>
             </div>
-            <!-- <div class="info-ths">
-            <i>GVHD:</i>
-            <p class="info-ths-name">ThS. Dương Phi Long</p>
-            <i class="time">Thời gian thực hiện: 01 - 07/2023</i>
-          </div> -->
-            <div class="info-student">
-                <div>
-
-                    <i>Giảng viên hướng dẫn:</i>
-                    <br>
-                    <i class="time">Thời gian thực hiện:</i>
-                </div>
-                <div class="teacher-name">
-                    <p class="info-name">ThS. Dương Phi Long</p>
-                    <p class="info-name">01 - 07/2023</p>
-                </div>
+          </div>
+          <div class="info-ths">
+              <i>Instructors:</i>
+            <div class="ths-name">
+              <p class="info-name">ThS. Dương Phi Long</p>
             </div>
+          </div>
         </div>
-
-    </footer>
+      </footer>
 </body>
 
 </html>

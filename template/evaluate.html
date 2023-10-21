@@ -271,14 +271,14 @@
                 <img class="logo-httt" src="/static/logo/Logo-Khoa-HTTT.png" alt="">
             </div>
             <div class="info-uni">
-                <p class="info-uni3">TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN - ĐHQG-HCM</p>
-                <p class="info-uni2"><b>KHOA HỆ THỐNG THÔNG TIN</b></p>
+                <p class="info-uni3">UNIVERSITY OF INFORMATION TECHNOLOGY - VIETNAM NATIONAL UNIVERSITY</p>
+                <p class="info-uni2"><b>FACULTY OF INFORMATION SYSTEMS</b></p>
             </div>
         </div>
     </header>
-    <h1>Kết quả phân lớp giai đoạn giấc ngủ</h1>
+    <h1>Results of sleep stage classification</h1>
     <div class="data-raw">
-        <h2>Hình ảnh dữ liệu edf thô</h2>
+        <h2>Raw edf data image</h2>
         <div class="canvas-chart">
             <canvas id="rawChart" width="1700" height="450"></canvas>
         </div>
@@ -286,15 +286,15 @@
     </div>
 
     <div class="data-raw">
-        <h2>Nhãn dữ liệu đúng</h2>
+        <h2>The data label is correct</h2>
         <div class="canvas-chart">
             <canvas id="trueLabelsChart" width="1500" height="350"></canvas>
         </div>
     </div>
     <div class="model" style="margin-top: 0px;">
-        <label for="select-model">Chọn mô hình</label>
+        <label for="select-model">Select model</label>
         <form name="select-model" id="select-model">
-            <input type="checkbox" name="model" id="modelTrue" value=0 onchange="updateChart()">Nhãn đúng</input>
+            <input type="checkbox" name="model" id="modelTrue" value=0 onchange="updateChart()">The label is correct</input>
             <input type="checkbox" name="model" id="modelCa-tcc" value=2 onchange="updateChart()">CA-TCC</input>
             <input type="checkbox" name="model" id="modelTs-tcc" value=4 onchange="updateChart()">TS-TCC</input>
             <input type="checkbox" name="model" id="modelTiny" value=5 onchange="updateChart()">TinySleepNet</input>
@@ -308,48 +308,36 @@
         </div>
     </div>
     <div class="model-bar" style="margin-top: 20px;">
-        <label>Biểu đồ kết quả accuracy từng phương pháp</label>
+        <label>Chart accuracy results of each method</label>
         <div class="canvas-chart">
             <canvas id="myChartBar"></canvas>
         </div>
     </div>
     <footer>
         <div class="footer-container">
-            <div class="info-student">
-                <i>Đề tài Khóa luận tốt nghiệp:</i>
-                <div class="student-name">
-                    <p class="info-name">PHÂN LỚP GIAI ĐOẠN GIẤC NGỦ
-                        <br>DỰA TRÊN PHƯƠNG PHÁP HỌC SÂU
-                    </p>
-                </div>
+          <div class="info-student">
+            <i>Theme:</i>
+            <div class="student-name">
+              <p class="info-name">SLEEP STAGE CLASSIFICATION
+                <br>BASED ON DEEP LEARNING
+              </p>
             </div>
-            <div class="info-student">
-                <i>Sinh viên thực hiện:</i>
-                <div class="student-name">
-                    <p class="info-name">Tần Thùy Trang - 19532384</p>
-                    <p class="info-name">Nguyễn Thị Hồng - 19521550</p>
-                </div>
+          </div>
+          <div class="info-student">
+            <i>Students implement:</i>
+            <div class="student-name">
+              <p class="info-name">Tần Thùy Trang - 19532384</p>
+              <p class="info-name">Nguyễn Thị Hồng - 19521550</p>
             </div>
-            <!-- <div class="info-ths">
-            <i>GVHD:</i>
-            <p class="info-ths-name">ThS. Dương Phi Long</p>
-            <i class="time">Thời gian thực hiện: 01 - 07/2023</i>
-          </div> -->
-            <div class="info-student">
-                <div class="title-name">
-
-                    <i>Giảng viên hướng dẫn:</i>
-                    <br>
-                    <i class="time">Thời gian thực hiện:</i>
-                </div>
-                <div class="teacher-name">
-                    <p class="info-name">ThS. Dương Phi Long</p>
-                    <p class="info-name">01 - 07/2023</p>
-                </div>
+          </div>
+          <div class="info-ths">
+              <i>Instructors:</i>
+            <div class="ths-name">
+              <p class="info-name">ThS. Dương Phi Long</p>
             </div>
+          </div>
         </div>
-
-    </footer>
+      </footer>
 </body>
 
 </html>

@@ -13,6 +13,7 @@ from datetime import datetime
 
 import numpy as np
 from mne.io import read_raw_edf
+from numpy import intersect1d
 
 from dataloader import dhedfreader
 
@@ -120,10 +121,10 @@ def EdfToFullNpz(base_path, data_dir):
                     if duration_sec % EPOCH_SEC_SIZE != 0:
                         raise Exception("Something wrong")
                     duration_epoch = int(duration_sec / EPOCH_SEC_SIZE)
-                    label_epoch = np.ones(duration_epoch, dtype=np.int) * label
+                    label_epoch = np.ones(duration_epoch, dtype=int) * label
                     labels.append(label_epoch)
                     idx = int(onset_sec * sampling_rate) + \
-                        np.arange(duration_sec * sampling_rate, dtype=np.int)
+                        np.arange(duration_sec * sampling_rate, dtype=int)
                     label_idx.append(idx)
 
                     print("Include onset:{}, duration:{}, label:{} ({})".format(
@@ -131,7 +132,7 @@ def EdfToFullNpz(base_path, data_dir):
                     ))
                 else:
                     idx = int(onset_sec * sampling_rate) + \
-                        np.arange(duration_sec * sampling_rate, dtype=np.int)
+                        np.arange(duration_sec * sampling_rate, dtype=int)
                     remove_idx.append(idx)
 
                     print("Remove onset:{}, duration:{}, label:{} ({})".format(
@@ -146,10 +147,10 @@ def EdfToFullNpz(base_path, data_dir):
                     if duration_sec % EPOCH_SEC_SIZE != 0:
                         raise Exception("Something wrong")
                     duration_epoch = int(duration_sec / EPOCH_SEC_SIZE)
-                    label_epoch = np.ones(duration_epoch, dtype=np.int) * label
+                    label_epoch = np.ones(duration_epoch, dtype=int) * label
                     labels.append(label_epoch)
                     idx = int(onset_sec * sampling_rate) + \
-                        np.arange(duration_sec * sampling_rate, dtype=np.int)
+                        np.arange(duration_sec * sampling_rate, dtype=int)
                     label_idx.append(idx)
 
                     print("Include onset:{}, duration:{}, label:{} ({})".format(
@@ -157,7 +158,7 @@ def EdfToFullNpz(base_path, data_dir):
                     ))
                 else:
                     idx = int(onset_sec * sampling_rate) + \
-                        np.arange(duration_sec * sampling_rate, dtype=np.int)
+                        np.arange(duration_sec * sampling_rate, dtype=int)
                     remove_idx.append(idx)
 
                     print("Remove onset:{}, duration:{}, label:{} ({})".format(
@@ -177,7 +178,7 @@ def EdfToFullNpz(base_path, data_dir):
         # Select only the data with labels
         print("before intersect label: {}".format(select_idx.shape))
         label_idx = np.hstack(label_idx)
-        select_idx = np.intersect1d(select_idx, label_idx)
+        select_idx = intersect1d(select_idx, label_idx)
         print("after intersect label: {}".format(select_idx.shape))
 
         # Remove extra index

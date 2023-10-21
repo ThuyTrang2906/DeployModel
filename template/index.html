@@ -173,7 +173,7 @@
     }
 
     .footer-container {
-      width: 75%;
+      width: 80%;
       height: 90px;
       display: flex;
       flex-direction: row;
@@ -245,38 +245,38 @@
         <img class="logo-httt" src="/static/logo/Logo-Khoa-HTTT.png" alt="">
       </div>
       <div class="info-uni">
-        <p class="info-uni3">TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN - ĐHQG-HCM</p>
-        <p class="info-uni2"><b>KHOA HỆ THỐNG THÔNG TIN</b></p>
+        <p class="info-uni3">UNIVERSITY OF INFORMATION TECHNOLOGY - VIETNAM NATIONAL UNIVERSITY</p>
+        <p class="info-uni2"><b>FACULTY OF INFORMATION SYSTEMS</b></p>
       </div>
     </div>
   </header>
-  <h1>CÔNG CỤ PHÂN LỚP GIAI ĐOẠN GIẤC NGỦ</h1>
+  <h1>SLEEP STAGE CLASSIFICATION TOOL</h1>
   <div class="home">
     <div id="label-selection" style="width: 200px;">
       <input type="radio" id="with-labels" name="label-option" value="with-labels" checked>
-      <label for="with-labels">Phân tích</label>
+      <label for="with-labels">Analyze</label>
       <br>
       <input type="radio" id="without-labels" name="label-option" value="without-labels">
-      <label for="without-labels">Dự đoán</label>
+      <label for="without-labels">Predict</label>
     </div>
 
     <form id="with-labels-form" action="/evaluate" method="POST" enctype="multipart/form-data">
       <br>
-      <label for="edf_file1">Chọn tệp edf:</label>
+      <label for="edf_file1">Upload file edf:</label>
       <input class="input_edf" type="file" id="edf_file1" name="file">
       <br>
-      <label for="edf_file2">Chọn tệp hypnogram:</label>
+      <label for="edf_file2">Upload file hypnogram:</label>
       <input class="input_hyn" type="file" id="edf_file2" name="file">
-      <input type="submit" value="Tải lên">
+      <input type="submit" value="Upload">
       <img class="icon-upload1" src="/static/logo/upload.png" alt="">
     </form>
 
     <form id="without-labels-form" action="/predict" method="POST" enctype="multipart/form-data" style="display: none;">
       <br>
-      <label for="edf_file1">Chọn tệp edf:</label>
+      <label for="edf_file1">Upload file edf:</label>
       <input class="input_edf" type="file" id="edf_file1" name="file">
       <br>
-      <input type="submit" value="Tải lên">
+      <input type="submit" value="Upload">
       <img class="icon-upload2" src="/static/logo/upload.png" alt="" />
     </form>
   </div>
@@ -284,39 +284,27 @@
   <footer>
     <div class="footer-container">
       <div class="info-student">
-        <i>Đề tài Khóa luận tốt nghiệp:</i>
+        <i>Theme:</i>
         <div class="student-name">
-          <p class="info-name">PHÂN LỚP GIAI ĐOẠN GIẤC NGỦ
-            <br>DỰA TRÊN PHƯƠNG PHÁP HỌC SÂU
+          <p class="info-name">SLEEP STAGE CLASSIFICATION
+            <br>BASED ON DEEP LEARNING
           </p>
         </div>
       </div>
       <div class="info-student">
-        <i>Sinh viên thực hiện:</i>
+        <i>Students implement:</i>
         <div class="student-name">
           <p class="info-name">Tần Thùy Trang - 19532384</p>
           <p class="info-name">Nguyễn Thị Hồng - 19521550</p>
         </div>
       </div>
-      <!-- <div class="info-ths">
-        <i>GVHD:</i>
-        <p class="info-ths-name">ThS. Dương Phi Long</p>
-        <i class="time">Thời gian thực hiện: 01 - 07/2023</i>
-      </div> -->
-      <div class="info-student">
-        <div>
-
-          <i>Giảng viên hướng dẫn:</i>
-          <br>
-          <i class="time">Thời gian thực hiện:</i>
-        </div>
-        <div class="student-name">
+      <div class="info-ths">
+          <i>Instructors:</i>
+        <div class="ths-name">
           <p class="info-name">ThS. Dương Phi Long</p>
-          <p class="info-name">01 - 07/2023</p>
         </div>
       </div>
     </div>
-
   </footer>
 </body>
 
