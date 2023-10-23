@@ -2,14 +2,14 @@
 gunicorn==21.2.0
 mne==1.3.1
 PyYAML==5.3.1
-numpy>=1.16.1
-pandas>=0.24.1
+numpy
+pandas
 scipy>=1.2.1
 matplotlib>=3.0.2
 torch==1.13.0
-tensorboard==2.5.0
-tensorboardX==2.2
-scikit-learn==0.19.2
+#tensorboard==2.5.0
+#tensorboardX==2.2
+scikit-learn
 # jinja2==2.10.1
 # markupsafe==1.1.0
 # itsdangerous==2.1.2
