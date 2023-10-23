@@ -275,9 +275,12 @@
     <div class="model">
         <label for="select-model">Select model</label>
         <form name="select-model" id="select-model">
-            <input type="checkbox" name="model" id="modelCa-tcc" value=2 onchange="updateChart()">CA-TCC</input>
-            <input type="checkbox" name="model" id="modelTs-tcc" value=4 onchange="updateChart()">TS-TCC</input>
-            <input type="checkbox" name="model" id="modelTiny" value=5 onchange="updateChart()">TinySleepNet</input>
+            <input type="checkbox" name="model" id="modelCa-tcc" value=1 onchange="updateChart()">CA-TCC ReLU</input>
+            <input type="checkbox" name="model" id="modelTs-tcc" value=2 onchange="updateChart()">TS-TCC ReLU</input>
+            <input type="checkbox" name="model" id="modelTiny" value=3 onchange="updateChart()">TinySleepNet ReLU</input>
+            <input type="checkbox" name="model" id="modelCa-tcc" value=5 onchange="updateChart()">CA-TCC GELU</input>
+            <input type="checkbox" name="model" id="modelTs-tcc" value=4 onchange="updateChart()">TS-TCC GELU</input>
+            <input type="checkbox" name="model" id="modelTiny" value=6 onchange="updateChart()">TinySleepNet GELU</input>
         </form>
         <div id="label-predict"></div>
         <div class="canvas-chart">
@@ -364,7 +367,6 @@
             return;
         }
 
-        console.log("datahaha", data)
         // const labelPredict = document.getElementById('label-predict');
         // data.forEach(item => {
         // // Tạo phần tử label

@@ -317,7 +317,7 @@
         <div class="label-container">
             <div class="label-column">
                 {% for method, outs in results.items() %}
-                {% elif method == "outs_tiny_ReLU" and method != "true_label": %}
+                {% if method == "outs_tiny_ReLU" and method != "true_labels": %}
                 <div class="label predicted-label">TinySleepNet : {{ outs }}</div>
                 {% elif method == "TS-TCC" and method != "true_label": %}
                 <div class="label predicted-label">TS-TCC: {{ outs }}</div>

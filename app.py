@@ -231,7 +231,7 @@ def evaluate():
         scores = {
             'TS-TCC': relu_acc_TS,
             'CA-TCC': relu_acc_CA,
-            'TS-TCC GELU': relu_acc_TS,
+            'TS-TCC GELU': gelu_acc_TS,
             'CA-TCC GELU': gelu_acc_CA,
             'TinySleepNet': relu_acc_tiny,
             'TinySleepNet GELU': gelu_acc_tiny,
