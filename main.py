@@ -103,15 +103,15 @@ def load_model_TCC(test_dl, base_path, method, act_func, labels=True):
             load_from =  'input/exp3CA/run_1/supervised_seed_123/saved_models/'
             checkpoint = torch.load(os.path.join(base_path, load_from, "model_epoch_30.pt"), map_location=device)
         
-    # if act_func == 'GELU':
-    #     if method == 'TS':
-    #         print("======         TS TCC Sleep GELU        ======")
-    #         load_from = "input/TS_GELU_exp16/run_1/supervised_seed_123/saved_models"
-    #         checkpoint = torch.load(os.path.join(base_path, load_from, "model_epoch_40.pt"), map_location=device)
-    #     else:
-    #         print("======         CA TCC Sleep         ======")
-    #         load_from =  'input/exp5CAGELU/run_1/supervised_seed_123/saved_models/'
-    #         checkpoint = torch.load(os.path.join(base_path, load_from, "model_epoch_18.pt"), map_location=device)
+    if act_func == 'GELU':
+        if method == 'TS':
+            print("======         TS TCC Sleep GELU        ======")
+            load_from = "input/TS_GELU_exp16/run_1/supervised_seed_123/saved_models"
+            checkpoint = torch.load(os.path.join(base_path, load_from, "model_epoch_40.pt"), map_location=device)
+        else:
+            print("======         CA TCC Sleep         ======")
+            load_from =  'input/exp5CAGELU/run_1/supervised_seed_123/saved_models/'
+            checkpoint = torch.load(os.path.join(base_path, load_from, "model_epoch_18.pt"), map_location=device)
     
     model.load_state_dict(checkpoint['model_state_dict'])
     model.eval()
