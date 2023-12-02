@@ -314,9 +314,9 @@
                 {% for method, outs in results.items() %}
                 {% if method == "outs_tiny_GELU" and method != "true_label": %}
                 <div class="label predicted-label">TinySleepNet (GELU): {{ outs }}</div>
-                {% elif method == "TS-TCC_gelu" and method != "true_label": %}
+                {% elif method == "TS-TCC_G" and method != "true_label": %}
                 <div class="label predicted-label">TS-TCC (GELU): {{ outs }}</div>
-                {% elif method == "CA-TCC_gelu" and method != "true_label": %}
+                {% elif method == "CA-TCC_G" and method != "true_label": %}
                 <div class="label predicted-label">CA-TCC (GELU): {{ outs }}</div>
                 {% endif %}
                 {% endfor %}

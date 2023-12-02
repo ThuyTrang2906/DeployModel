@@ -262,9 +262,9 @@
             <input type="checkbox" name="model" id="modelCa-tcc" value=1 onchange="updateChart()">CA-TCC ReLU</input>
             <input type="checkbox" name="model" id="modelTs-tcc" value=2 onchange="updateChart()">TS-TCC ReLU</input>
             <input type="checkbox" name="model" id="modelTiny" value=3 onchange="updateChart()">TinySleepNet ReLU</input>
-            <input type="checkbox" name="model" id="modelCa-tcc" value=5 onchange="updateChart()">CA-TCC GELU</input>
-            <input type="checkbox" name="model" id="modelTs-tcc" value=4 onchange="updateChart()">TS-TCC GELU</input>
-            <input type="checkbox" name="model" id="modelTiny" value=6 onchange="updateChart()">TinySleepNet GELU</input>
+            <input type="checkbox" name="model" id="modelCa-tcc_G" value=5 onchange="updateChart()">CA-TCC GELU</input>
+            <input type="checkbox" name="model" id="modelTs-tcc_G" value=4 onchange="updateChart()">TS-TCC GELU</input>
+            <input type="checkbox" name="model" id="modelTiny_G" value=6 onchange="updateChart()">TinySleepNet GELU</input>
         </form>
         <div id="label-predict"></div>
         <div class="canvas-chart">
@@ -372,7 +372,10 @@
         const labelColors = {
             'TS-TCC': 'blue',
             'CA-TCC': 'green',
-            'TinySleepNet': 'yellow'
+            'TinySleepNet': 'yellow',
+            'TS-TCC_G': 'orange',
+            'CA-TCC_G': 'brown',
+            'TinySleepNet_G': 'violet'
         };
 
         const datasets = Object.entries(data.data).map(([label, values]) => {

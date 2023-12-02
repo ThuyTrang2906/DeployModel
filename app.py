@@ -60,9 +60,12 @@ def predict():
     generate_nolabels(base_path, "data/test_data.npz")
     test_dl = data_generator(str(os.path.join(base_path, "data/test_data.pt")), labels=False)
 
-    total_loss, total_acc_TS, outs_TS, trgs = load_model_TCC(test_dl, base_path, method='TS', act_func='GELU', labels=False)
-    total_loss, total_acc_CA, outs_CA, trgs = load_model_TCC(test_dl, base_path, method='CA', act_func='GELU', labels=False)
+    total_loss, total_acc_TS, outs_TS, trgs = load_model_TCC(test_dl, base_path, method='TS', act_func='ReLU', labels=False)
+    total_loss, total_acc_CA, outs_CA, trgs = load_model_TCC(test_dl, base_path, method='CA', act_func='ReLU', labels=False)
     acc, f1_score, outs_tiny = load_model_Tiny(test_npz, base_path, act_func = 'ReLU', labels=False)
+    total_loss, total_acc_TS, outs_TS_G, trgs = load_model_TCC(test_dl, base_path, method='TS', act_func='GELU', labels=False)
+    total_loss, total_acc_CA, outs_CA_G, trgs = load_model_TCC(test_dl, base_path, method='CA', act_func='GELU', labels=False)
+    acc, f1_score, outs_tiny_G = load_model_Tiny(test_npz, base_path, act_func = 'GELU', labels=False)
     
     psg_file = glob.glob(os.path.join(base_path, data_path, "*PSG.edf"))
     raw = mne.io.read_raw_edf(psg_file[0])
@@ -93,11 +96,17 @@ def predict():
         outs_TS_labels = [stage_mapping[out] for out in outs_TS]
         outs_CA_labels = [stage_mapping[out] for out in outs_CA]
         outs_tiny_ReLU_labels = [stage_mapping[out] for out in outs_tiny]
+        outs_TS_G_labels = [stage_mapping[out] for out in outs_TS_G]
+        outs_CA_G_labels = [stage_mapping[out] for out in outs_CA_G]
+        outs_tiny_GELU_labels = [stage_mapping[out] for out in outs_tiny_G]
 
         results = {
             'TS-TCC': outs_TS_labels,
             'CA-TCC': outs_CA_labels,
             'outs_tiny_ReLU': outs_tiny_ReLU_labels,
+            'TS-TCC_G': outs_TS_G_labels,
+            'CA-TCC_G': outs_CA_G_labels,
+            'outs_tiny_GELU': outs_tiny_GELU_labels,
         }
 
         predicts = {
@@ -112,12 +121,12 @@ def predict():
     else:
         predicts = {
                 'true_labels': [],
-                'TS-TCC_gelu': [],
+                'TS-TCC_gelu': outs_TS_G.tolist(),
                 'TS-TCC': outs_TS.tolist(),
                 'CA-TCC': outs_CA.tolist(),
-                'CA-TCC_gelu': [],
+                'CA-TCC_gelu': outs_CA_G.tolist(),
                 'outs_tiny_ReLU': outs_tiny.tolist(),
-                'outs_tiny_GELU': [],
+                'outs_tiny_GELU': outs_tiny_G.tolist(),
                 'inforRaw_x': x.tolist(),
                 'inforRaw_y': y.tolist(),
 
@@ -154,8 +163,8 @@ def evaluate():
     total_loss, relu_acc_CA, outs_CA, trgs = load_model_TCC(test_pt, base_path, method='CA', act_func='ReLU')
 
     # print("\n*****    GELU    ******")
-    total_loss, gelu_acc_TS, outs_TS_G, trgs  = load_model_TCC(test_pt, base_path, method='TS', act_func='GELU')
-    total_loss, gelu_acc_CA, outs_CA_G, trgs  = load_model_TCC(test_pt, base_path, method='CA', act_func='GELU')
+    total_loss, gelu_acc_TS, outs_TS_G, trgs  = load_model_TCC(test_pt, base_path, method='TS', act_func='GELU', labels=True)
+    total_loss, gelu_acc_CA, outs_CA_G, trgs  = load_model_TCC(test_pt, base_path, method='CA', act_func='GELU', labels=True)
     
     relu_acc_tiny, f1_tiny_relu, outs_tiny_ReLU = load_model_Tiny(test_npz, base_path, act_func = 'ReLU', labels=True)
     gelu_acc_tiny, f1_tiny_gelu, outs_tiny_GELU = load_model_Tiny(test_npz, base_path, act_func = 'GELU', labels=True)
@@ -194,7 +203,7 @@ def evaluate():
         outs_CA_labels = [stage_mapping[out] for out in outs_CA]
         outs_CA_G_labels = [stage_mapping[out] for out in outs_CA_G]
         outs_tiny_ReLU_labels = [stage_mapping[out] for out in outs_tiny_ReLU]
-        outs_tiny_GELU_labels = [stage_mapping[out] for out in outs_tiny_ReLU]
+        outs_tiny_GELU_labels = [stage_mapping[out] for out in outs_tiny_GELU]
 
         results = {
             'true_label': trgs_labels,
