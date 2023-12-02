@@ -85,11 +85,11 @@ def predict():
 
     if len(data['x']) < 10:
         stage_mapping = {
-            0: "Giai đoạn Thức",
-            1: "Giai đoạn 1",
-            2: "Giai đoạn 2",
-            3: "Giai đoạn 3",
-            4: "REM"
+            0: "Stage W",
+            1: "Stage N1",
+            2: "Stage N2",
+            3: "Stage N3",
+            4: "Stage REM"
         }
 
         trgs_labels = [stage_mapping[trg] for trg in trgs]
